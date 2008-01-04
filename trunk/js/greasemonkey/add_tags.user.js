@@ -2,7 +2,7 @@
 // @name	  Etiquetaiser
 // @namespace	  http://atalaya.blogalia.com
 // @description	  Añade etiquetas a entradas blogalia
-// @include	  http://*blogalia.com/*
+// @include	  http://*.blogalia.com/bitacora.historias*
 // ==/UserScript==
 
 // based on code by Phil Wilson, Robert De Almeida, and Jeff Minard
@@ -10,11 +10,11 @@
 // Añade etiquetas a partir de la cadena introducida
 function add_tags(s) {
   var tags = s.split(/,\s+/);
-  var result='\n';
+  var result='\n<span class="etiquetas_technorati">';
   for ( var i=0; i < tags.length; i++ ) {
     result += "<a rel='tag' href='http://www.technorati.com/tag/"+tags[i]+"'>"+tags[i]+"</a> ";
   }
-  return result;
+  return result+"</span>";
 }
 
 //Extrae la parte del formulario
