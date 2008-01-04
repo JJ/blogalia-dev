@@ -12,7 +12,7 @@ function add_tags(s) {
   var tags = s.split(/,\s+/);
   var result='';
   for ( var i=0; i < tags.length; i++ ) {
-    result += "<a href='http://www.technorati.com/tag/"+tags[i]+"'>"+tags[i]+"</a> ";
+    result += "<a rel='tag' href='http://www.technorati.com/tag/"+tags[i]+"'>"+tags[i]+"</a> ";
   }
   return result;
 }
