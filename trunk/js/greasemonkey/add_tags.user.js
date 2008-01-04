@@ -12,7 +12,9 @@ function add_tags(s) {
   var tags = s.split(/,\s+/);
   var result='\n<span class="etiquetas_technorati">Etiquetas: ';
   for ( var i=0; i < tags.length; i++ ) {
-    result += "<a rel='tag' href='http://www.technorati.com/tag/"+tags[i]+"'>"+tags[i]+"</a>";
+    var palabras = tags[i].split(/\s+/);
+    var palabras_plus = palabras.join('+');
+    result += "<a rel='tag' href='http://www.technorati.com/tag/"+palabras_plus+"'>"+tags[i]+"</a>";
     if ( i < (tags.length-1) ) {
       result += ", ";
     }
