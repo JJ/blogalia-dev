@@ -13,6 +13,9 @@ function add_tags(s) {
   var result='\n<span class="etiquetas_technorati">Etiquetas: ';
   for ( var i=0; i < tags.length; i++ ) {
     result += "<a rel='tag' href='http://www.technorati.com/tag/"+tags[i]+"'>"+tags[i]+"</a> ";
+    if ( i < (tags.length-1) ) {
+      result += ", ";
+    }
   }
   return result+"</span>";
 }
