@@ -10,7 +10,7 @@
 // Añade etiquetas a partir de la cadena introducida
 function add_tags(s) {
   var tags = s.split(/,\s+/);
-  var result='';
+  var result='\n';
   for ( var i=0; i < tags.length; i++ ) {
     result += "<a rel='tag' href='http://www.technorati.com/tag/"+tags[i]+"'>"+tags[i]+"</a> ";
   }
