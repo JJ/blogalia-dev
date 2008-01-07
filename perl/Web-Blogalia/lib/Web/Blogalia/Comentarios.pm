@@ -2,14 +2,19 @@ package Web::Blogalia::Comentarios;
 
 use strict;
 use warnings;
+use Carp;
+
+use version; our $VERSION = qv('0.0.3');
 
 use LWP::UserAgent;
 use File::Slurp;
 
+
 use Exporter;
 our @ISA = ('Exporter');
 
-our $dir = "/var/tmp/comentarios";
+
+use Web::Blogalia;
 
 =head2 new
 
@@ -22,14 +27,17 @@ Comprueba si el fichero de comentarios estÃ¡ presente, y lo analiza
 sub new {
   
   my $class = shift;
-  my $site = shift || 'blogalia';
+  my $blogalia = shift || Web::Blogalia->new(); # Por defecto posiblemente va bien
 
   my $ua = LWP::UserAgent->new;
   $ua->agent("Araña atalayera 0.02 ");
   my $timeOut = 400;
+
+  my $dir = $blogalia->{'tmpdir'};
   if ( !-e $dir ) {
-    mkdir $dir
+    mkdir $dir;
   }
+  my $site = $blogalia->{'site'};
   my $fn = "$dir/$site.100comentarios.html";
 
   #Existe el fichero?
@@ -45,9 +53,9 @@ sub new {
     my $url= "http://www.$site.com/100comentarios.php";
     my $response = $ua->get( $url ) || die "No puedo bajarme los comentarios";
     $ultimosComentarios = $response->content() ;
-    open( F, ">$fn" ) || die "La cagamos: no se puede abrir $fn";
-    print F $ultimosComentarios;
-    close F;
+    open my $f, ">", $fn or croak "La cagamos: no se puede abrir $fn";
+    print $f $ultimosComentarios;
+    close $f;
   } else {
     $ultimosComentarios = read_file($fn);
   }
