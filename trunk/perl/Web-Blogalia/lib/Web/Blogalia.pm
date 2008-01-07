@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Carp;
 
-use version; $VERSION = qv('0.0.3');
+use version; our $VERSION = qv('0.0.3');
 
 # Other recommended modules (uncomment to use):
 #  use IO::Prompt;
@@ -12,16 +12,35 @@ use version; $VERSION = qv('0.0.3');
 #  use Perl6::Slurp;
 #  use Perl6::Say;
 
+use YAML qw(Load LoadFile);
 
 # Module implementation here
+sub new {
+  my $class = shift;
+  my $arg_ref = shift || { site => 'blogalia',
+			   tmpdir => '/var/tmp/blogalia' }; #Evitar warnings
+  my $new_object;
+  if ( ref $arg_ref ) { #argumentos en un hash
+    $new_object = $arg_ref;
+  } else { #Documento en YAML con los argumentos
+    #Si lleva .yml o .yaml es que es un fichero
+    if ( $arg_ref =~ /\.ya?ml/ ) {
+      $new_object = LoadFile( $arg_ref )
+    } else {
+      $new_object = Load( $arg_ref );
+    }
+  }
 
+  bless $new_object, $class;
+  return $new_object;
+}
 
 1; # Magic true value required at end of module
 __END__
 
 =head1 NAME
 
-Web::Blogalia - [One line description of module's purpose here]
+Web::Blogalia - Clase base para cosas de blogalia
 
 
 =head1 VERSION
@@ -32,19 +51,14 @@ This document describes Web::Blogalia version 0.0.1
 =head1 SYNOPSIS
 
     use Web::Blogalia;
+    my $blogalia = Web::Blogalia->new() ; # Para Blogalia
+    my $otra_blogalia = Web::Blogalia->new( $conf ); # Para valores especiales
 
-=for author to fill in:
-    Brief code example(s) here showing commonest usage(s).
-    This section will be as far as many users bother reading
-    so make it as educational and exeplary as possible.
-  
-  
 =head1 DESCRIPTION
 
-=for author to fill in:
-    Write a full description of the module and its features here.
-    Use subsections (=head2, =head3) as appropriate.
-
+Una clase base para contener cosas generales, como directorios
+temporales, si se trata de Blogalia o Bloxus (u otra cosa que se
+invente), y algunas utilidades que puedan venir bien.
 
 =head1 INTERFACE 
 
