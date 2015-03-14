@@ -1,0 +1,1 @@
+Blogalia.com es un sitio peculiar, con unos usuarios peculiares. Estos scripts pueden ayudar a hacer cosas.
